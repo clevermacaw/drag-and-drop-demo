@@ -2,6 +2,7 @@
 import { ref } from 'vue'
 import { Container, Draggable, DropResult } from 'vue3-smooth-dnd'
 import { v4 as uuidv4 } from 'uuid'
+import ImageBlock from '@/components/ImageBlock.vue'
 import TextBlock from '@/components/TextBlock.vue'
 import { BlockItem } from '@/types'
 
@@ -21,39 +22,67 @@ function applyDrag(arr: BlockItem[], dragResult: DropResult) {
   if (removedIndex !== null) {
     itemToAdd = result.splice(removedIndex, 1)[0]
   }
+
   if (addedIndex !== null) {
-    if (itemToAdd.type === 'text')
-      result.splice(addedIndex, 0, {
-        id: uuidv4(),
-        type: 'text',
-        text: 'Random text',
-      })
+    if (itemToAdd.new) {
+      if (itemToAdd.type === 'text')
+        result.splice(addedIndex, 0, {
+          id: uuidv4(),
+          type: 'text',
+          text: 'Random text',
+        })
+      else
+        result.splice(addedIndex, 0, {
+          id: uuidv4(),
+          type: 'image',
+          url: `/assets/block_image${Math.floor(Math.random() * 3) + 1}.jpg`,
+        })
+    } else {
+      result.splice(addedIndex, 0, itemToAdd.item)
+    }
   }
 
   return result
+}
+
+function getItemPayload() {
+  return (index: number) => {
+    return {
+      new: false,
+      item: items.value[index],
+    }
+  }
 }
 </script>
 
 <template>
   <div class="px-8 py-4 flex flex-col gap-4 h-full">
     <h2 class="text-2xl text-center font-bold text-gray-800">Dropzone</h2>
-    <Container
+    <container
       group-name="blocks"
-      class="flex flex-grow gap-4 p-2 border-gray-800 border-2 border-dashed"
-      drag-class="bg-primary dark:bg-primary 
-            border-2 border-primary-hover text-white 
-            transition duration-100 ease-in z-50
-            transform rotate-6 scale-110"
-      drop-class="transition duration-100 
-            ease-in z-50 transform 
-            -rotate-2 scale-90"
+      class="flex flex-wrap flex-grow content-baseline border-gray-800 border-2 border-dashed overflow-y-auto p-2 gap-4 sm:h-auto"
+      orientation="horizontal"
+      :get-child-payload="getItemPayload()"
       @drop="onDrop"
     >
-      <Draggable v-for="(item, i) in items" :key="item.id">
+      <draggable v-for="(item, i) in items" :key="item.id">
         <template v-if="item.type === 'text'">
-          <text-block :text="item.text" />
+          <text-block :item="item" />
         </template>
-      </Draggable>
-    </Container>
+        <template v-else>
+          <image-block :item="item" />
+        </template>
+      </draggable>
+    </container>
   </div>
 </template>
+
+<style scoped>
+.smooth-dnd-container.horizontal {
+  display: flex;
+}
+.smooth-dnd-container.horizontal > .smooth-dnd-draggable-wrapper {
+  display: block;
+  height: auto;
+}
+</style>

@@ -10,7 +10,7 @@ import BlockDropzone from '@/components/BlockDropzone.vue'
     </div>
     <div class="h-full border-r-4 hidden sm:block" />
     <div class="w-full border-t-4 block sm:hidden" />
-    <div class="flex-grow">
+    <div class="flex-grow h-[calc(100vh-150px)] sm:h-auto">
       <block-dropzone />
     </div>
   </div>

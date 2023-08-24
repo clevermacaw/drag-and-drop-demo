@@ -15,7 +15,10 @@ const blocks = ref([
 
 function getBlockPayload() {
   return (index: number) => {
-    return blocks.value[index]
+    return {
+      new: true,
+      type: blocks.value[index].type,
+    }
   }
 }
 </script>
@@ -23,7 +26,7 @@ function getBlockPayload() {
 <template>
   <div class="px-8 py-4">
     <h2 class="text-2xl text-center font-bold text-gray-800">Blocks</h2>
-    <Container
+    <container
       group-name="blocks"
       behaviour="copy"
       :get-child-payload="getBlockPayload()"
@@ -33,13 +36,13 @@ function getBlockPayload() {
             transition duration-100 ease-in z-50
             transform rotate-6 scale-110"
     >
-      <Draggable v-for="(block, i) in blocks" :key="block.type">
+      <draggable v-for="(block, i) in blocks" :key="block.type">
         <div
           class="text-lg font-medium w-full p-4 flex justify-center items-center shadow-md bg-white rounded-sm cursor-pointer"
         >
           {{ block.name }}
         </div>
-      </Draggable>
-    </Container>
+      </draggable>
+    </container>
   </div>
 </template>
