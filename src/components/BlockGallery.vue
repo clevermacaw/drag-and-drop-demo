@@ -21,13 +21,17 @@ function getBlockPayload() {
 </script>
 
 <template>
-  <div class="p-4">
+  <div class="px-8 py-4">
     <h2 class="text-2xl text-center font-bold text-gray-800">Blocks</h2>
     <Container
       group-name="blocks"
       behaviour="copy"
       :get-child-payload="getBlockPayload()"
-      class="flex flex-col gap-4 mt-4"
+      class="flex sm:flex-col gap-4 mt-4"
+      drag-class="bg-primary dark:bg-primary 
+            border-2 border-primary-hover text-white 
+            transition duration-100 ease-in z-50
+            transform rotate-6 scale-110"
     >
       <Draggable v-for="(block, i) in blocks" :key="block.type">
         <div

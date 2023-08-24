@@ -4,10 +4,11 @@
       <a
         href="https://www.mailerlite.com/"
         class="hover:cursor-pointer text-purple-500 hover:text-purple-800"
-        >MailerLite</a
-      >&nbsp;Assessment
+      >
+        MailerLite </a
+      >&nbsp;<span class="hidden sm:block">Assessment</span>
     </div>
-    <div class="flex space-x-6 text-lg">
+    <div class="flex text-lg">
       <button>Save</button>
     </div>
   </div>
