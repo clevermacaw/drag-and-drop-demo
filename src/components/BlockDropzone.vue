@@ -4,15 +4,22 @@ import { Container, Draggable, DropResult } from 'vue3-smooth-dnd'
 import { v4 as uuidv4 } from 'uuid'
 import ImageBlock from '@/components/ImageBlock.vue'
 import TextBlock from '@/components/TextBlock.vue'
+import ImageFormDialog from './ImageFormDialog.vue'
 import TextFormDialog from '@/components/TextFormDialog.vue'
-import { BlockItem, TextBlockItem } from '@/types'
+import { BlockItem, TextBlockItem, ImageBlockItem } from '@/types'
 
 const items = ref<BlockItem[]>([])
 const isTextDialogOpen = ref(false)
+const isImageDialogOpen = ref(false)
 const textFormContent = ref<TextBlockItem>({
   id: '',
   type: 'text',
   text: '',
+})
+const imageFormContent = ref<ImageBlockItem>({
+  id: '',
+  type: 'image',
+  url: '',
 })
 
 function handleDrop(dropResult: DropResult) {
@@ -61,24 +68,43 @@ function getItemPayload() {
   }
 }
 
-function handleUpdateTextBlock(item: TextBlockItem) {
-  textFormContent.value = item
-  isTextDialogOpen.value = true
+function handleShowDialog(item: BlockItem) {
+  if (item.type === 'text') {
+    textFormContent.value = item
+    isTextDialogOpen.value = true
+  } else {
+    imageFormContent.value = item
+    isImageDialogOpen.value = true
+  }
 }
 
-function handleDeleteTextBlock(id: string) {
+function handleCloseDialog(type: string) {
+  if (type === 'text') isTextDialogOpen.value = false
+  else isImageDialogOpen.value = false
+}
+
+function handleDeleteBlock(id: string) {
   const index = items.value.findIndex((it) => it.id === id)
   if (index !== -1) items.value.splice(index, 1)
 }
 
-function handleCloseTextDialog() {
-  isTextDialogOpen.value = false
+function handleUpdateBlock(updatedItem: BlockItem) {
+  handleCloseDialog(updatedItem.type)
+  const item = items.value.find((it) => it.id === updatedItem.id)
+  if (item) {
+    if (item.type === 'text') item.text = (updatedItem as TextBlockItem).text
+    else item.url = (updatedItem as ImageBlockItem).url
+  }
 }
 
-function handleSaveText(updatedItem: TextBlockItem) {
-  isTextDialogOpen.value = false
-  const item = items.value.find((it) => it.id === updatedItem.id)
-  if (item && item.type === 'text') item.text = updatedItem.text
+function handleDuplicateBlock(duplicatedItem: BlockItem) {
+  const index = items.value.findIndex((it) => it.id === duplicatedItem.id)
+  if (index !== -1) {
+    items.value.splice(index, 0, {
+      ...items.value[index],
+      id: uuidv4(),
+    })
+  }
 }
 </script>
 
@@ -96,21 +122,33 @@ function handleSaveText(updatedItem: TextBlockItem) {
         <template v-if="item.type === 'text'">
           <TextBlock
             :item="item"
-            @update="handleUpdateTextBlock"
-            @delete="handleDeleteTextBlock"
+            @update="handleShowDialog"
+            @delete="handleDeleteBlock"
           />
         </template>
         <template v-else>
-          <ImageBlock :item="item" />
+          <ImageBlock
+            :item="item"
+            @update="handleShowDialog"
+            @duplicate="handleDuplicateBlock"
+            @delete="handleDeleteBlock"
+          />
         </template>
       </Draggable>
     </Container>
     <TextFormDialog
       :is-open="isTextDialogOpen"
       :form="textFormContent"
-      @close="handleCloseTextDialog"
-      @save="handleSaveText"
-      @cancel="handleCloseTextDialog"
+      @close="() => handleCloseDialog('text')"
+      @save="handleUpdateBlock"
+      @cancel="() => handleCloseDialog('text')"
+    />
+    <ImageFormDialog
+      :is-open="isImageDialogOpen"
+      :form="imageFormContent"
+      @close="() => handleCloseDialog('image')"
+      @save="handleUpdateBlock"
+      @cancel="() => handleCloseDialog('image')"
     />
   </div>
 </template>

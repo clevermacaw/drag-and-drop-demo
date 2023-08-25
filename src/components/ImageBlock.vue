@@ -3,14 +3,32 @@ import { PropType } from 'vue'
 import useButtons from '@/composables/useButtons'
 import { ImageBlockItem } from '@/types'
 
-const { classes, EditIcon, TrashIcon } = useButtons()
+const { classes, DuplicateIcon, EditIcon, TrashIcon } = useButtons()
 
-defineProps({
+const props = defineProps({
   item: {
     type: Object as PropType<ImageBlockItem>,
     required: true,
   },
 })
+
+const emit = defineEmits<{
+  update: [item: ImageBlockItem]
+  duplicate: [item: ImageBlockItem]
+  delete: [id: string]
+}>()
+
+function handleUpdate() {
+  emit('update', props.item)
+}
+
+function handleDuplicate() {
+  emit('duplicate', props.item)
+}
+
+function handleDelete() {
+  emit('delete', props.item.id)
+}
 </script>
 
 <template>
@@ -21,10 +39,13 @@ defineProps({
       :alt="`Image-${item.id}`"
     />
     <div class="flex justify-end gap-1.5 bg-slate-200 p-2">
-      <button :class="classes.edit">
+      <button :class="classes.edit" @click="handleUpdate">
         <EditIcon />
       </button>
-      <button :class="classes.delete">
+      <button :class="classes.duplicate" @click="handleDuplicate">
+        <DuplicateIcon />
+      </button>
+      <button :class="classes.delete" @click="handleDelete">
         <TrashIcon />
       </button>
     </div>
