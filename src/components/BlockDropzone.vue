@@ -106,11 +106,23 @@ function handleDuplicateBlock(duplicatedItem: BlockItem) {
     })
   }
 }
+
+function handleSavePageData() {
+  console.log('Page data:', JSON.parse(JSON.stringify(items.value)))
+}
 </script>
 
 <template>
   <div class="px-8 py-4 flex flex-col gap-4 h-full">
-    <h2 class="text-2xl text-center font-bold text-gray-800">Dropzone</h2>
+    <div class="flex justify-between">
+      <h2 class="text-2xl text-center font-bold text-gray-800">Dropzone</h2>
+      <button
+        class="px-4 py-1 rounded bg-purple-500 hover:bg-purple-800 text-white"
+        @click="handleSavePageData"
+      >
+        Save
+      </button>
+    </div>
     <Container
       group-name="blocks"
       class="flex flex-wrap flex-grow content-baseline border-gray-800 border-2 border-dashed overflow-y-auto p-2 gap-4 sm:h-auto"
