@@ -26,7 +26,7 @@ function getBlockPayload() {
 <template>
   <div class="px-8 py-4">
     <h2 class="text-2xl text-center font-bold text-gray-800">Blocks</h2>
-    <container
+    <Container
       group-name="blocks"
       behaviour="copy"
       :get-child-payload="getBlockPayload()"
@@ -36,13 +36,13 @@ function getBlockPayload() {
             transition duration-100 ease-in z-50
             transform rotate-6 scale-110"
     >
-      <draggable v-for="(block, i) in blocks" :key="block.type">
+      <Draggable v-for="(block, i) in blocks" :key="block.type">
         <div
           class="text-lg font-medium w-full p-4 flex justify-center items-center shadow-md bg-white rounded-sm cursor-pointer"
         >
           {{ block.name }}
         </div>
-      </draggable>
-    </container>
+      </Draggable>
+    </Container>
   </div>
 </template>

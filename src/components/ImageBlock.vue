@@ -22,10 +22,10 @@ defineProps({
     />
     <div class="flex justify-end gap-1.5 bg-slate-200 p-2">
       <button :class="classes.edit">
-        <edit-icon />
+        <EditIcon />
       </button>
       <button :class="classes.delete">
-        <trash-icon />
+        <TrashIcon />
       </button>
     </div>
   </div>

@@ -6,12 +6,12 @@ import BlockDropzone from '@/components/BlockDropzone.vue'
 <template>
   <div class="flex flex-col sm:flex-row">
     <div class="">
-      <block-gallery />
+      <BlockGallery />
     </div>
     <div class="h-full border-r-4 hidden sm:block" />
     <div class="w-full border-t-4 block sm:hidden" />
     <div class="flex-grow h-[calc(100vh-150px)] sm:h-auto">
-      <block-dropzone />
+      <BlockDropzone />
     </div>
   </div>
 </template>
