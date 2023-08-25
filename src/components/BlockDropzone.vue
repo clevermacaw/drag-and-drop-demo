@@ -123,6 +123,7 @@ function handleDuplicateBlock(duplicatedItem: BlockItem) {
           <TextBlock
             :item="item"
             @update="handleShowDialog"
+            @duplicate="handleDuplicateBlock"
             @delete="handleDeleteBlock"
           />
         </template>

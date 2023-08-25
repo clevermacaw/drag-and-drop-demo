@@ -3,7 +3,7 @@ import { PropType } from 'vue'
 import useButtons from '@/composables/useButtons'
 import { TextBlockItem } from '@/types'
 
-const { classes, EditIcon, TrashIcon } = useButtons()
+const { classes, DuplicateIcon, EditIcon, TrashIcon } = useButtons()
 
 const props = defineProps({
   item: {
@@ -14,11 +14,16 @@ const props = defineProps({
 
 const emit = defineEmits<{
   update: [item: TextBlockItem]
+  duplicate: [item: TextBlockItem]
   delete: [id: string]
 }>()
 
 function handleUpdate() {
   emit('update', props.item)
+}
+
+function handleDuplicate() {
+  emit('duplicate', props.item)
 }
 
 function handleDelete() {
@@ -32,6 +37,9 @@ function handleDelete() {
     <div class="flex justify-end gap-1.5 bg-slate-200 p-2">
       <button :class="classes.edit" @click="handleUpdate">
         <EditIcon />
+      </button>
+      <button :class="classes.duplicate" @click="handleDuplicate">
+        <DuplicateIcon />
       </button>
       <button :class="classes.delete" @click="handleDelete">
         <trash-icon />
