@@ -52,20 +52,11 @@ function applyDrag(arr: BlockItem[], dragResult: DropResult) {
           url: `/assets/block_image${Math.floor(Math.random() * 3) + 1}.jpg`,
         })
     } else {
-      result.splice(addedIndex, 0, itemToAdd.item)
+      result.splice(addedIndex, 0, itemToAdd)
     }
   }
 
   return result
-}
-
-function getItemPayload() {
-  return (index: number) => {
-    return {
-      new: false,
-      item: items.value[index],
-    }
-  }
 }
 
 function handleShowDialog(item: BlockItem) {
@@ -125,12 +116,10 @@ function handleSavePageData() {
     </div>
     <Container
       group-name="blocks"
-      class="flex flex-wrap flex-grow content-baseline border-gray-800 border-2 border-dashed overflow-y-auto p-2 gap-4 sm:h-auto"
-      orientation="horizontal"
-      :get-child-payload="getItemPayload()"
+      class="flex-grow border-gray-800 border-2 border-dashed overflow-y-auto p-2 sm:h-auto"
       @drop="handleDrop"
     >
-      <Draggable v-for="(item, i) in items" :key="item.id">
+      <Draggable v-for="(item, i) in items" :key="item.id" class="py-2">
         <template v-if="item.type === 'text'">
           <TextBlock
             :item="item"
@@ -173,5 +162,9 @@ function handleSavePageData() {
 .smooth-dnd-container.horizontal > .smooth-dnd-draggable-wrapper {
   display: block;
   height: auto;
+}
+
+.smooth-dnd-container.horizontal > .smooth-dnd-draggable-wrapper {
+  vertical-align: initial;
 }
 </style>

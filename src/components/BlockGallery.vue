@@ -31,10 +31,9 @@ function getBlockPayload() {
       behaviour="copy"
       :get-child-payload="getBlockPayload()"
       class="flex sm:flex-col gap-4 mt-4"
-      drag-class="bg-primary dark:bg-primary 
-            border-2 border-primary-hover text-white 
-            transition duration-100 ease-in z-50
-            transform rotate-6 scale-110"
+      drag-class="border-2 text-white 
+        transition duration-100 ease-in z-50
+        transform rotate-6 scale-110"
     >
       <Draggable v-for="(block, i) in blocks" :key="block.type">
         <div

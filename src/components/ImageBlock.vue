@@ -34,7 +34,7 @@ function handleDelete() {
 <template>
   <div class="bg-white shadow-lg">
     <img
-      class="w-40 h-40 object-cover"
+      class="w-full aspect-square object-cover"
       :src="item.url"
       :alt="`Image-${item.id}`"
     />
