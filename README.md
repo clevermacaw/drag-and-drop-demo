@@ -1,25 +1,15 @@
-# mailerlite-assessment
+# Drag-and-drop Demo
 
-This template should help get you started developing with Vue 3 in Vite.
+A simple drag & drop landing page using Vue.js.
 
-## Recommended IDE Setup
+## Requirements
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
-
-## Type Support for `.vue` Imports in TS
-
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin) to make the TypeScript language service aware of `.vue` types.
-
-If the standalone TypeScript plugin doesn't feel fast enough to you, Volar has also implemented a [Take Over Mode](https://github.com/johnsoncodehk/volar/discussions/471#discussioncomment-1361669) that is more performant. You can enable it by the following steps:
-
-1. Disable the built-in TypeScript Extension
-    1) Run `Extensions: Show Built-in Extensions` from VSCode's command palette
-    2) Find `TypeScript and JavaScript Language Features`, right click and select `Disable (Workspace)`
-2. Reload the VSCode window by running `Developer: Reload Window` from the command palette.
-
-## Customize configuration
-
-See [Vite Configuration Reference](https://vitejs.dev/config/).
+1. Create 2 draggable blocks: Text and Image.
+2. The content of the Text block should be editable.
+3. Image block can be edited by selecting one of the 3-4 predefined images.
+4. The user should be able to rearrange, duplicate and delete blocks.
+5. Landing page data like text content, links to images, block order, etc. should be exported to JSON format when the user clicks the “Save” button (console.log is enough).
+6. Style the application using CSS or a CSS framework of your choice (e.g., Tailwind CSS).
 
 ## Project Setup
 
